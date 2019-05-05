@@ -1,0 +1,42 @@
+package 剑指offer.二叉树.二叉树之字形打印;
+
+
+import 剑指offer.二叉树.TreeNode;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
+public class Main {
+    public static void function(TreeNode treeNode){
+        List<Stack<TreeNode>> list = new ArrayList<>();
+        list.add(new Stack<>());
+        list.add(new Stack<>());
+        int current = 0;
+        list.get(current).push(treeNode);
+        while( list.get(0).size() != 0 || list.get(1).size() != 0){
+            TreeNode node = list.get(current).pop();
+            System.out.print(node.value+" ");
+            if(current == 0){
+                if(node.leftnode!= null)
+                    list.get(1).push(node.leftnode);
+                if(node.rightnode != null)
+                    list.get(1).push(node.rightnode);
+            }else{
+                if(node.rightnode != null)
+                    list.get(0).push(node.rightnode);
+                if(node.rightnode != null)
+                    list.get(0).push(node.leftnode);
+            }
+            if(list.get(current).size() == 0){
+                System.out.println();
+                current = 1 - current;
+            }
+        }
+    }
+    public static void main(String[] args) {
+        int[] arr = {8,6,10,5,7,9,11,1,2,3,4,5,6,7,8};
+        TreeNode treeNode = TreeNode.ArraytoTree(arr);
+        function(treeNode);
+    }
+}
